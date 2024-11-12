@@ -27,6 +27,7 @@ export default {
         searchPapers() {
             if (this.searchQuery === '') {
                 alert('请输入关键词。');
+                this.filteredPapers = [];
                 return;
             }
             const query = this.searchQuery.toLowerCase();
@@ -47,7 +48,8 @@ export default {
     max-width: 800px;
     margin: 0 auto;
     padding: 20px;
-    background-color: #f0f8ff;
+    /* background-color: #f0f8ff; */
+    background-color: rgba(240, 248, 255, 0.8);
     border-radius: 8px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
