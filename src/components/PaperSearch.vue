@@ -1,0 +1,63 @@
+<template>
+    <div class="paper-search">
+        <h1>科研论文搜索</h1>
+        <el-input v-model="searchQuery" placeholder="请输入关键词..." class="search-input" suffix-icon="el-icon-search" />
+        <el-button type="primary" class="search-button" @click="searchPapers">搜索</el-button>
+
+        <PaperList v-if="filteredPapers.length > 0" :papers="filteredPapers" />
+    </div>
+</template>
+
+<script>
+import { papers } from '../data/paper_demo.js';
+import PaperList from './PaperList.vue';
+
+export default {
+    components: {
+        PaperList,
+    },
+    data() {
+        return {
+            searchQuery: '',
+            papers,
+            filteredPapers: [],
+        };
+    },
+    methods: {
+        searchPapers() {
+            if (this.searchQuery === '') {
+                alert('请输入关键词。');
+                return;
+            }
+            const query = this.searchQuery.toLowerCase();
+            this.filteredPapers = this.papers.filter(paper =>
+                paper.title.toLowerCase().includes(query) ||
+                paper.abstract.toLowerCase().includes(query)
+            );
+            if (this.filteredPapers.length === 0) {
+                alert('没有找到相关论文。');
+            }
+        },
+    },
+};
+</script>
+
+<style scoped>
+.paper-search {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f0f8ff;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.search-input {
+    width: 300px;
+    margin-right: 10px;
+}
+
+.search-button {
+    margin-top: 10px;
+}
+</style>
