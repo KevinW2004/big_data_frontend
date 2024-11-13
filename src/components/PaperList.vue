@@ -4,7 +4,7 @@
       <el-col v-for="(paper, index) in paginatedPapers" :key="index" :span="24">
         <el-card class="paper-item" @click="goToDetail(paper)">
           <div class="title">{{ paper.title }}</div>
-          <div class="abstract">{{ paper.abstract }}</div>
+          <!-- ><div class="abstract">{{ paper.abstract }}</div><!-->
           <div class="category-year">分类: {{ paper.category }} | 年份: {{ paper.year }}</div>
         </el-card>
       </el-col>
@@ -19,7 +19,6 @@
     />
   </div>
 </template>
-
 <script>
 export default {
   props: {
@@ -43,6 +42,7 @@ export default {
   methods: {
     goToDetail(paper) {
       // 触发跳转到论文详情的逻辑
+      // TODO: 跳转到论文详情页面
       console.log("Navigating to detail for:", paper);
     },
     handlePageChange(page) {
@@ -81,5 +81,6 @@ export default {
 .pagination {
   margin-top: 20px;
   text-align: center;
+  justify-self: center;
 }
 </style>
