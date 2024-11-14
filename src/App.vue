@@ -1,3 +1,4 @@
+
 <template>
   <div class="container">
     <router-view/>
@@ -29,7 +30,7 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background: url(./assets/bg-bookshelf.jpg); 
+  background: url(./assets/bg-bookshelf.jpg);
   background-size: cover;
   background-position: 0% 30%;
   filter: blur(3px);  /* 设置模糊程度 */

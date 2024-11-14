@@ -20,6 +20,8 @@
   </div>
 </template>
 <script>
+import router from "@/router";
+
 export default {
   props: {
     papers: {
@@ -43,6 +45,8 @@ export default {
     goToDetail(paper) {
       // 触发跳转到论文详情的逻辑
       // TODO: 跳转到论文详情页面
+      //把论文的id存入sessionStorage,在论文详情页面取出后加载
+      router.push("/paper")
       console.log("Navigating to detail for:", paper);
     },
     handlePageChange(page) {

@@ -1,7 +1,7 @@
 <template>
     <div class="paper-search">
         <h1>科研论文搜索</h1>
-        <el-input v-model="searchQuery" placeholder="请输入关键词..." class="search-input" suffix-icon="el-icon-search" />
+        <el-input v-model="searchQuery" placeholder="请输入关键词..." class="search-input" />
         <el-button type="primary" class="search-button" @click="searchPapers">搜索</el-button>
 
         <PaperList v-if="filteredPapers.length > 0" :papers="filteredPapers" />
