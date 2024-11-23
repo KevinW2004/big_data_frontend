@@ -11,6 +11,7 @@
 <script>
 import { papers } from '../data/paper_demo.js';
 import PaperList from './PaperList.vue';
+import { search_papers } from '../api/papers.js'
 
 export default {
     components: {
@@ -24,17 +25,20 @@ export default {
         };
     },
     methods: {
-        searchPapers() {
+        async searchPapers() {
             if (this.searchQuery === '') {
                 alert('请输入关键词。');
                 this.filteredPapers = [];
                 return;
             }
             const query = this.searchQuery.toLowerCase();
-            this.filteredPapers = this.papers.filter(paper =>
-                paper.title.toLowerCase().includes(query) ||
-                paper.abstract.toLowerCase().includes(query)
-            );
+            // this.filteredPapers = this.papers.filter(paper =>
+            //     paper.title.toLowerCase().includes(query) ||
+            //     paper.abstract.toLowerCase().includes(query)
+            // );
+            console.log("开始搜索", query);
+            this.filteredPapers = await search_papers(query);
+            console.log("搜索结果", this.filteredPapers);
             if (this.filteredPapers.length === 0) {
                 alert('没有找到相关论文。');
             }
