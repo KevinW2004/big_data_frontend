@@ -1,6 +1,6 @@
 <script >
 import router from "@/router";
-import { get_paper_by_title } from '@/api/papers';
+import {get_cited_papers, get_paper_by_title, get_papers_by_category} from '@/api/papers';
 
 export default {
   data(){
@@ -28,6 +28,22 @@ export default {
     },
     backToHome(){
       router.push('/');
+    },
+    async jumpToCategory(){
+      const new_papers = await get_papers_by_category(this.category)
+      console.log(new_papers);
+      this.$store.commit('set_papers', new_papers);
+      await router.push('/papers/category/' + this.category);
+    },
+    jumpToSimilar(){
+      // TODO: Implement similar papers
+      router.push('/papers/similar');
+    },
+    async jumpToCited(){
+      const new_papers = await get_cited_papers(this.title)
+      console.log(new_papers);
+      this.$store.commit('set_papers', new_papers);
+      await router.push('/papers/cited');
     }
   },
   async mounted() {
@@ -51,9 +67,9 @@ export default {
       <p><span class="category-title">Category:</span> {{this.category}}</p>
     </div>
     <div class="buttons">
-      <el-button type="success" plain class="buttons-el-button1">查看同类论文</el-button>
-      <el-button type="success" plain class="buttons-el-button">查看相似论文【VIP】</el-button>
-      <el-button type="success" plain class="buttons-el-button">查看引用论文【VIP】</el-button>
+      <el-button type="success" plain class="buttons-el-button1" @click="jumpToCategory">查看同类论文</el-button>
+      <el-button type="success" plain class="buttons-el-button" @click="jumpToSimilar">查看相似论文【VIP】</el-button>
+      <el-button type="success" plain class="buttons-el-button" @click="jumpToCited">查看引用论文【VIP】</el-button>
       <el-button type="success" plain class="buttons-el-button" @click="backToHome">返回首页</el-button>
     </div>
   </div>
@@ -62,9 +78,12 @@ export default {
 
 <style scoped>
 .container{
-  width: 100%;
-  height: 100%;
-  background: white;
+  background-color: rgba(240, 248, 255, 0.9);
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  max-width: 800px;
+  margin: 20px auto;
   display: flex;
   align-items: flex-start; /* Align content to the top of the container */
 }

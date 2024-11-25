@@ -19,21 +19,21 @@ export default {
         title: {
             type: String,
             required: true,
-        },
-        papers: {
-            type: Array,
-            required: true,
-        },
+        }
+    },
+    data() {
+        return {
+            papers: [],
+        };
     },
     methods: {
         goBack() {
             this.$router.push('/'); // 返回首页
         },
-        goToNext() {
-            // 实现下一页的逻辑
-            alert('这里是下一页的逻辑'); // 示例提示
-        },
     },
+  mounted() {
+    this.papers = this.$store.state.papers;
+  }
 };
 </script>
 

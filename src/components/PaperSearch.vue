@@ -3,15 +3,20 @@
         <h1>科研论文搜索</h1>
         <el-input v-model="searchQuery" placeholder="请输入关键词..." class="search-input" />
         <el-button type="primary" class="search-button" @click="searchPapers">搜索</el-button>
-
+        <div v-if="filteredPapers.length === 0" class="no-result">
+          <span style="margin-top: 5px">或者您可以：</span>
+          <el-button type="text" @click="jumpToHistory">查看历史记录</el-button>
+          <el-divider direction="vertical"/>
+          <el-button type="text" @click="jumpToRecommendations">查看专属推荐【VIP】</el-button>
+        </div>
         <PaperList v-if="filteredPapers.length > 0" :papers="filteredPapers" />
     </div>
 </template>
 
 <script>
-import { papers } from '../data/paper_demo.js';
+import { papers } from '@/data/paper_demo';
 import PaperList from './PaperList.vue';
-import { search_papers } from '../api/papers.js'
+import { search_papers } from '@/api/papers'
 
 export default {
     components: {
@@ -27,7 +32,7 @@ export default {
     methods: {
         async searchPapers() {
             if (this.searchQuery === '') {
-                alert('请输入关键词。');
+                await this.$alert('请输入关键词。');
                 this.filteredPapers = [];
                 return;
             }
@@ -40,8 +45,14 @@ export default {
             this.filteredPapers = await search_papers(query);
             console.log("搜索结果", this.filteredPapers);
             if (this.filteredPapers.length === 0) {
-                alert('没有找到相关论文。');
+                await this.$alert('没有找到相关论文。');
             }
+        },
+        jumpToHistory() {
+            this.$alert("TODO")
+        },
+        jumpToRecommendations() {
+            this.$alert("TODO")
         },
     },
 };
@@ -63,7 +74,10 @@ export default {
     margin-right: 10px;
 }
 
+.no-result {
+  margin-top: 10px;
+}
+
 .search-button {
-    margin-top: 10px;
 }
 </style>
