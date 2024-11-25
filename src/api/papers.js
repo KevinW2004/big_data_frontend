@@ -1,4 +1,7 @@
 import {axios, url_head} from './request'
+
+
+
 export const search_papers = (query) => {
     return axios.get(`${url_head}/papers/search`, {params: {keyword: query}})
         .then(res => {
