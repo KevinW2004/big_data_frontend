@@ -30,12 +30,13 @@ service.interceptors.response.use(
             return response;
         } else {
             // return Promise.reject();
+            console.log(response)
             return response;
         }
     },
     error => {
         console.log(error);
-        return Promise.reject();
+        return error.response;
     }
 )
 

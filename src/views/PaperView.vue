@@ -37,11 +37,23 @@ export default {
     },
     jumpToSimilar(){
       // TODO: Implement similar papers
-      router.push('/papers/similar');
+      // router.push('/papers/similar');
     },
     async jumpToCited(){
       const new_papers = await get_cited_papers(this.title)
       console.log(new_papers);
+      if (!new_papers) {
+        await this.$alert("网络错误，请稍后再试。", "提示")
+        return;
+      }
+      if (new_papers.error) {
+        await this.$alert(new_papers.error, "提示")
+        return;
+      }
+      if (new_papers.length === 0) {
+        await this.$alert("没有找到引用论文。", "提示")
+        return;
+      }
       this.$store.commit('set_papers', new_papers);
       await router.push('/papers/cited');
     }
@@ -49,6 +61,10 @@ export default {
   async mounted() {
     this.title = this.$route.params.paper_title;
     this.paper = await get_paper_by_title(this.title);
+    if (!this.paper){
+      await this.$alert("请先登录")
+      this.$router.go(-1)
+    }
     console.log(this.title, this.paper);
     if (this.paper === undefined) this.paper = this.paperDetail;
     this.fetchData();

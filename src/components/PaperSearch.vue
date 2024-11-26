@@ -43,6 +43,11 @@ export default {
             // );
             console.log("开始搜索", query);
             this.filteredPapers = await search_papers(query);
+            if (!this.filteredPapers) {
+              this.$alert('请先登录');
+              this.filteredPapers = [];
+              return;
+            }
             console.log("搜索结果", this.filteredPapers);
             if (this.filteredPapers.length === 0) {
                 await this.$alert('没有找到相关论文。');

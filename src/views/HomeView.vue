@@ -92,6 +92,7 @@ export default {
                 type:'success',
                 center:true,
               })
+              this.isRegister=false
             }
           }).catch(()=>{
         ElMessage({
