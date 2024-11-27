@@ -44,7 +44,12 @@ export default {
             console.log("开始搜索", query);
             this.filteredPapers = await search_papers(query);
             if (!this.filteredPapers) {
-              this.$alert('请先登录');
+              this.$alert('请先登录', '提示', { type: 'warning' });
+              this.filteredPapers = [];
+              return;
+            }
+            if (this.filteredPapers.error) {
+              this.$alert(this.filteredPapers.error);
               this.filteredPapers = [];
               return;
             }

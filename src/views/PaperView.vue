@@ -1,6 +1,6 @@
 <script >
 import router from "@/router";
-import {get_cited_papers, get_paper_by_title, get_papers_by_category} from '@/api/papers';
+import {get_cited_papers, get_paper_by_title, get_papers_by_category, get_similar_papers} from '@/api/papers';
 
 export default {
   data(){
@@ -35,9 +35,23 @@ export default {
       this.$store.commit('set_papers', new_papers);
       await router.push('/papers/category/' + this.category);
     },
-    jumpToSimilar(){
-      // TODO: Implement similar papers
-      // router.push('/papers/similar');
+    async jumpToSimilar(){
+      const new_papers = await get_similar_papers(this.title);
+      console.log(new_papers);
+      if (!new_papers) {
+        await this.$alert("网络错误，请稍后再试。", "提示")
+        return;
+      }
+      if (new_papers.error) {
+        await this.$alert(new_papers.error, "提示")
+        return;
+      }
+      if (new_papers.length === 0) {
+        await this.$alert("没有找到相似论文。", "提示")
+        return;
+      }
+      this.$store.commit('set_papers', new_papers);
+      await router.push('/papers/similar');
     },
     async jumpToCited(){
       const new_papers = await get_cited_papers(this.title)

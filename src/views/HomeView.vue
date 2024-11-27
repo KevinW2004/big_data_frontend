@@ -155,6 +155,15 @@ export default {
       });
     },
     handleUpgrade(){
+      const token = sessionStorage.getItem('token');
+      if (!token) {
+        ElMessage({
+          message: '请先登录！',
+          type: 'error',
+          center: true,
+        });
+        return;
+      }
       this.upgradeVisible=true
     },
     handleLogin(){
