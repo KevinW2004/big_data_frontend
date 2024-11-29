@@ -53,3 +53,14 @@ export const get_similar_papers = (title) => {
             console.log(err)
         })
 }
+export const update_history=(title)=>{
+    return axios.post(`${url_head}/paper/addRecord`,null,{
+        params:{
+            title:title
+        }
+    }).then(res=>{
+        return res.data
+    }).catch(err=>{
+        console.log(err)
+    })
+}

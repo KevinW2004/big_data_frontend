@@ -121,6 +121,8 @@ export default {
               this.currentUserName=res.data.username
               sessionStorage.setItem('current_username',res.data.username)
               sessionStorage.setItem('role',res.data.role)
+              this.role=res.data.role
+              this.isVip=true
             })
           })
           .catch(()=>{
@@ -191,7 +193,9 @@ export default {
           this.isVip=true
           sessionStorage.setItem('role','VIP')
         }
+        console.log("your su")
       }).catch(()=>{
+        console.log("your sus")
         ElMessage({
           message:'升级失败，请先登录！',
           type:'error',

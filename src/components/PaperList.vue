@@ -21,6 +21,8 @@
 </template>
 <script>
 import router from "@/router";
+import {update_history} from "@/api/papers";
+import {ElMessage} from "element-plus";
 
 export default {
   props: {
@@ -45,6 +47,15 @@ export default {
     goToDetail(paper) {
       // 跳转到论文详情页面
       router.push(`/paper/${paper.title}`)
+      update_history(paper.title).then(res=>{
+        console.log(res.data)
+      }).catch(()=>{
+        ElMessage({
+          message:"error",
+          type:'error',
+          center:true
+        })
+      })
     },
     handlePageChange(page) {
       this.currentPage = page;
