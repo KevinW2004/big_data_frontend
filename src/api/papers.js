@@ -69,4 +69,20 @@ export const get_history=()=>{
         .then(res=>{
             return res;
         })
+        .catch(err=>{
+            console.log(err)
+        })
+}
+
+export const get_recommend_papers=()=>{
+    return axios.get(`${url_head}/papers/get_recommendations`)
+        .then(res=>{
+            if (res.status === 422) { // reject
+                return null
+            }
+            return res.data
+        })
+        .catch(err=>{
+            console.log(err)
+        })
 }
