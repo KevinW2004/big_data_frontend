@@ -35,6 +35,7 @@ export default {
     },
     methods: {
         async searchPapers() {
+            this.historyPapers=[]
             if (this.searchQuery === '') {
                 await this.$alert('请输入关键词。');
                 this.filteredPapers = [];
