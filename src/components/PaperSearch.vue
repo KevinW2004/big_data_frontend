@@ -10,13 +10,14 @@
           <el-button type="text" @click="jumpToRecommendations">查看专属推荐【VIP】</el-button>
         </div>
         <PaperList v-if="filteredPapers.length > 0" :papers="filteredPapers" />
+        <PaperList v-if="historyPapers.length > 0" :papers="historyPapers" />
     </div>
 </template>
 
 <script>
 import { papers } from '@/data/paper_demo';
 import PaperList from './PaperList.vue';
-import { search_papers } from '@/api/papers'
+import {get_history, get_paper_by_title, search_papers} from '@/api/papers'
 
 export default {
     components: {
@@ -27,6 +28,9 @@ export default {
             searchQuery: '',
             papers,
             filteredPapers: [],
+            historyPapers:[],
+            titles:[],
+            record:{}
         };
     },
     methods: {
@@ -59,7 +63,18 @@ export default {
             }
         },
         jumpToHistory() {
-            this.$alert("TODO")
+          get_history().then(res=>{
+            this.titles=res.data.msg
+            console.log(this.titles)
+            this.titles.forEach((title)=>{
+              get_paper_by_title(title.title)
+                  .then(res=>{
+                    this.record=res.data
+                    console.log(res)
+                    this.historyPapers.push(res)
+                  })
+            })
+          })
         },
         jumpToRecommendations() {
             this.$alert("TODO")

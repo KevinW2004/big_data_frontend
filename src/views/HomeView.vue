@@ -122,8 +122,7 @@ export default {
               sessionStorage.setItem('current_username',res.data.username)
               sessionStorage.setItem('role',res.data.role)
               this.role=res.data.role
-              this.isVip=true
-            })
+              this.isVip=true})
           })
           .catch(()=>{
             ElMessage({
